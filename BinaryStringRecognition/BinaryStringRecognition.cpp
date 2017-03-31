@@ -5,20 +5,22 @@ int main()
 	PseudoTree tree;
 	string test = "";
 
-	test = "010011";
+	test = "001110";
 	tree.AddStringToBranch(test);
-	test = "000011";
+	test = "110101";
 	tree.AddStringToBranch(test);
-	test = "011011";
+	test = "111100";
 	tree.AddStringToBranch(test);
-	test = "000111";
+	test = "111010";
+	tree.AddStringToBranch(test);
+	test = "111001";
+	tree.AddStringToBranch(test);
+	test = "111000";
 	tree.AddStringToBranch(test);
 
 	tree.PrintContents();
 
-	tree.CalculateIdentityBitsCount();
-
-	tree.PrintContents();
+	cout << tree.CalculateIdentityBitsCount() << endl;
 
 	system("Pause");
 	return 0;

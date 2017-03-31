@@ -29,7 +29,7 @@ public:
 	void AddStringToBranch(string& str, unsigned int branchIndex = 0);
 	void PrintContents();
 	void SplitBranch(unsigned int branchIndex, unsigned int bitPosition);
-	void CalculateIdentityBitsCount();
+	unsigned int CalculateIdentityBitsCount();
 
 	void CalculateBalanceRanks(); // test function... to be removed
 	void PrintBalanceRanks(); // used for debugging
