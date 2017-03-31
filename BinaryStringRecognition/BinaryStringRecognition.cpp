@@ -16,15 +16,9 @@ int main()
 
 	tree.PrintContents();
 
-	unsigned int splitBit = 1;
-	cout << "Splitting at position: " << splitBit << "..." << endl;
-
-	tree.SplitBranch(0, splitBit);
+	tree.CalculateIdentityBitsCount();
 
 	tree.PrintContents();
-
-	tree.CalculateBalanceRanks();
-	tree.PrintBalanceRanks();
 
 	system("Pause");
 	return 0;

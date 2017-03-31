@@ -74,9 +74,25 @@ void PseudoTree::SplitBranch(unsigned int branchIndex, unsigned int bitPosition)
 		}
 	}
 
-	// delete the selected branch and clear empty branches
+	// delete the selected branch
 	_container.erase(_container.begin() + branchIndex);
+}
+
+void PseudoTree::CalculateIdentityBitsCount()
+{
+	// calculate the balance ranks
+	this->__CalculateBalanceRanks(_identityBitCount);
+	// then sort according to the ranks
+	sort(_columnTrackers.begin(), _columnTrackers.end(), __SortByBalanceRanksFunction);
+	// further split branches based on 'most balanced bit'
+	for (int idx = _container.size() - 1; idx >= 0; --idx)
+	{
+		SplitBranch(idx, _columnTrackers[0].column);
+	}
+	// clear empty branches
 	this->__GarbageCollect();
+
+	++_identityBitCount;
 }
 
 void PseudoTree::CalculateBalanceRanks()
