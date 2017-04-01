@@ -5,26 +5,24 @@ int main()
 	PseudoTree tree;
 	string test = "";
 
-	test = "100000000";
+	test = "00111";
 	tree.AddStringToBranch(test);
-	test = "001000000";
+	test = "10110";
 	tree.AddStringToBranch(test);
-	test = "000000001";
+	test = "11101";
 	tree.AddStringToBranch(test);
-	test = "000000100";
+	test = "11100";
 	tree.AddStringToBranch(test);
-	test = "000010000";
+	test = "11011";
 	tree.AddStringToBranch(test);
-	test = "010000000";
+	test = "01010";
 	tree.AddStringToBranch(test);
-	test = "101111101";
+	test = "00001";
 	tree.AddStringToBranch(test);
-	test = "111010010";
-	tree.AddStringToBranch(test);
-	test = "101101010";
+	test = "00000";
 	tree.AddStringToBranch(test);
 	
-	//tree.PrintContents();
+	tree.PrintContents();
 
 	cout << "min no. of identity bits: " << endl
 		<< "> " << tree.CalculateIdentityBitsCount(true) << endl;
