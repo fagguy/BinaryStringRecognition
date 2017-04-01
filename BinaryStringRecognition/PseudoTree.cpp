@@ -89,8 +89,8 @@ int PseudoTree::CalculateIdentityBitsCount()
 
 		// calculate the balance ranks
 		this->__CalculateBalanceRanks(_identityBitCount);
-		// then sort according to the ranks
-		sort(_columnTrackers.begin() + _identityBitCount, _columnTrackers.end(), __SortByBalanceRanksFunction);
+		// then shift the lowest ranked one to our "working front"
+		this->__ShiftMinBalanceRankToFront(_identityBitCount);
 		// further split branches based on 'most balanced bit'
 		for (int idx = _container.size() - 1; idx >= 0; --idx)
 		{
@@ -153,6 +153,14 @@ void PseudoTree::__CalculateBalanceRanks(unsigned int bitsToSkip)
 			_columnTrackers[idx].balanceRank += abs(rawSum);
 		}
 	}
+}
+
+void PseudoTree::__ShiftMinBalanceRankToFront(unsigned int front)
+{
+	auto trackersFront = _columnTrackers.begin() + front;
+	auto minTracker = min_element(trackersFront, _columnTrackers.end(), __SortByBalanceRanksFunction);
+
+	iter_swap(trackersFront, minTracker);
 }
 
 unsigned int PseudoTree::__GarbageCollect()

@@ -37,6 +37,7 @@ public:
 private:
 	void __InitColumnTrackers();
 	void __CalculateBalanceRanks(unsigned int bitsToSkip = 0);
+	void __ShiftMinBalanceRankToFront(unsigned int front);
 	unsigned int __GarbageCollect();
 
 	static bool __PrintBalanceRanksSortFunction(_columnTracker& i, _columnTracker& j);
