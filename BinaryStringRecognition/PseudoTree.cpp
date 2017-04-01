@@ -7,20 +7,19 @@ PseudoTree::PseudoTree()
 
 PseudoTree::~PseudoTree()
 {
-	for (auto branch : _container)
+	for (auto& branch : _container)
 	{
-		for (auto str : *branch)
+		for (auto str : branch)
 		{
 			delete str;
 		}
-
-		delete branch;
 	}
 }
 
 unsigned int PseudoTree::AddBranch()
 {
-	_container.push_back(new vector<string *>);
+	vector<string *> newBranch;
+	_container.push_back(newBranch);
 
 	return _container.size() - 1; // returns the branch index
 }
@@ -32,7 +31,7 @@ unsigned int PseudoTree::BranchCount()
 
 void PseudoTree::AddStringToBranch(string & str, unsigned int branchIndex)
 {
-	_container[branchIndex]->push_back(new string(str));
+	_container[branchIndex].push_back(new string(str));
 }
 
 void PseudoTree::PrintContents()
@@ -41,7 +40,7 @@ void PseudoTree::PrintContents()
 	{
 		cout << "branch " << idx << ":" << endl;
 
-		for (auto str : *_container[idx])
+		for (auto str : _container[idx])
 		{
 			cout << "> " << *str << endl;
 		}
@@ -82,7 +81,7 @@ int PseudoTree::CalculateIdentityBitsCount(bool debug)
 		++_identityBitCount;
 	}
 
-	if (debug) __PrintIdentityBits();
+	if (debug) this->__PrintIdentityBits();
 
 	return _identityBitCount;
 }
@@ -112,20 +111,19 @@ void PseudoTree::__SplitBranch(unsigned int branchIndex, unsigned int bitPositio
 	unsigned int oneBranchIndex = this->AddBranch();
 
 	// iterate through the selected branch and transfer strings over
-	for (auto str : *_container[branchIndex])
+	for (auto str : _container[branchIndex])
 	{
 		if ((*str)[bitPosition] == '0')
 		{
-			_container[zeroBranchIndex]->push_back(str);
+			_container[zeroBranchIndex].push_back(str);
 		}
 		else if ((*str)[bitPosition] == '1')
 		{
-			_container[oneBranchIndex]->push_back(str);
+			_container[oneBranchIndex].push_back(str);
 		}
 	}
 
 	// delete the selected branch
-	delete _container[branchIndex];
 	_container.erase(_container.begin() + branchIndex);
 }
 
@@ -133,7 +131,7 @@ void PseudoTree::__InitColumnTrackers()
 {
 	_columnTracker tracker;
 
-	for (unsigned int idx = 0; idx < (*_container[0])[0]->length(); ++idx) // length of first string of first branch
+	for (unsigned int idx = 0; idx < (_container[0])[0]->length(); ++idx) // length of first string of first branch
 	{
 		tracker.column = idx;
 		_columnTrackers.push_back(tracker);
@@ -146,11 +144,11 @@ void PseudoTree::__CalculateBalanceRanks(unsigned int bitsToSkip)
 	{
 		_columnTrackers[idx].balanceRank = 0; // reset the balance rank
 
-		for (auto branch : _container)
+		for (auto& branch : _container)
 		{
 			int rawSum = 0;
 
-			for (auto str : *branch)
+			for (auto str : branch)
 			{
 				if ((*str)[_columnTrackers[idx].column] == '1') ++rawSum;
 				else if ((*str)[_columnTrackers[idx].column] == '0') --rawSum;
@@ -187,14 +185,13 @@ unsigned int PseudoTree::__GarbageCollect()
 
 	for (int index = _container.size() - 1; index >= 0; --index)
 	{
-		if (_container[index]->size() < 2) // if branches contain one string or empty
+		if (_container[index].size() < 2) // if branches contain one string or empty
 		{
-			for (auto str : *_container[index])
+			for (auto str : _container[index])
 			{
 				delete str;
 			}
 
-			delete _container[index];
 			_container.erase(_container.begin() + index);
 			++garbageCount;
 		}

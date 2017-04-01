@@ -16,7 +16,7 @@ private:
 		unsigned int balanceRank = 0;
 	};
 
-	vector<vector<string *> *> _container;
+	vector<vector<string *>> _container;
 	vector<_columnTracker> _columnTrackers;
 	unsigned int _identityBitCount = 0;
 
