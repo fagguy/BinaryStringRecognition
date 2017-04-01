@@ -78,7 +78,7 @@ void PseudoTree::SplitBranch(unsigned int branchIndex, unsigned int bitPosition)
 	_container.erase(_container.begin() + branchIndex);
 }
 
-int PseudoTree::CalculateIdentityBitsCount()
+int PseudoTree::CalculateIdentityBitsCount(bool debug)
 {
 	while (!_container.empty())
 	{
@@ -101,6 +101,8 @@ int PseudoTree::CalculateIdentityBitsCount()
 
 		++_identityBitCount;
 	}
+
+	if (debug) __PrintIdentityBits();
 
 	return _identityBitCount;
 }
@@ -161,6 +163,18 @@ void PseudoTree::__ShiftMinBalanceRankToFront(unsigned int front)
 	auto minTracker = min_element(trackersFront, _columnTrackers.end(), __SortByBalanceRanksFunction);
 
 	iter_swap(trackersFront, minTracker);
+}
+
+void PseudoTree::__PrintIdentityBits()
+{
+	cout << "identity bits: " << endl << "> ";
+
+	for (unsigned int idx = 0; idx < _identityBitCount; ++idx)
+	{
+		cout << _columnTrackers[idx].column << " ";
+	}
+
+	cout << endl;
 }
 
 unsigned int PseudoTree::__GarbageCollect()

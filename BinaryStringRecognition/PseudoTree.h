@@ -29,7 +29,7 @@ public:
 	void AddStringToBranch(string& str, unsigned int branchIndex = 0);
 	void PrintContents(); // used for debugging
 	void SplitBranch(unsigned int branchIndex, unsigned int bitPosition);
-	int CalculateIdentityBitsCount();
+	int CalculateIdentityBitsCount(bool debug = false);
 
 	void CalculateBalanceRanks(); // test function... to be removed
 	void PrintBalanceRanks(); // used for debugging
@@ -38,6 +38,7 @@ private:
 	void __InitColumnTrackers();
 	void __CalculateBalanceRanks(unsigned int bitsToSkip = 0);
 	void __ShiftMinBalanceRankToFront(unsigned int front);
+	void __PrintIdentityBits();
 	unsigned int __GarbageCollect();
 
 	static bool __PrintBalanceRanksSortFunction(_columnTracker& i, _columnTracker& j);

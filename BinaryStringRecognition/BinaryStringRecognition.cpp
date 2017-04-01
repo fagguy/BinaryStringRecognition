@@ -26,7 +26,8 @@ int main()
 	
 	//tree.PrintContents();
 
-	cout << tree.CalculateIdentityBitsCount() << endl;
+	cout << "min no. of identity bits: " << endl
+		<< "> " << tree.CalculateIdentityBitsCount(true) << endl;
 
 	system("Pause");
 	return 0;
