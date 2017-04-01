@@ -75,6 +75,7 @@ void PseudoTree::SplitBranch(unsigned int branchIndex, unsigned int bitPosition)
 	}
 
 	// delete the selected branch
+	delete _container[branchIndex];
 	_container.erase(_container.begin() + branchIndex);
 }
 
