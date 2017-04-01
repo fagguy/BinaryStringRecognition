@@ -35,6 +35,7 @@ public:
 	void PrintBalanceRanks(); // used for debugging
 
 private:
+	void __SplitBranch(unsigned int branchIndex, unsigned int bitPosition);
 	void __InitColumnTrackers();
 	void __CalculateBalanceRanks(unsigned int bitsToSkip = 0);
 	void __ShiftMinBalanceRankToFront(unsigned int front);

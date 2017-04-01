@@ -33,11 +33,6 @@ unsigned int PseudoTree::BranchCount()
 void PseudoTree::AddStringToBranch(string & str, unsigned int branchIndex)
 {
 	_container[branchIndex]->push_back(new string(str));
-
-	if (branchIndex == 0 && _container[0]->size() == 1)
-	{
-		this->__InitColumnTrackers();
-	}
 }
 
 void PseudoTree::PrintContents()
@@ -57,30 +52,14 @@ void PseudoTree::PrintContents()
 
 void PseudoTree::SplitBranch(unsigned int branchIndex, unsigned int bitPosition)
 {
-	// create a new branches first
-	unsigned int zeroBranchIndex = this->AddBranch();
-	unsigned int oneBranchIndex = this->AddBranch();
-
-	// iterate through the selected branch and transfer strings over
-	for (auto str : *_container[branchIndex])
-	{
-		if ((*str)[bitPosition] == '0')
-		{
-			_container[zeroBranchIndex]->push_back(str);
-		}
-		else if ((*str)[bitPosition] == '1')
-		{
-			_container[oneBranchIndex]->push_back(str);
-		}
-	}
-
-	// delete the selected branch
-	delete _container[branchIndex];
-	_container.erase(_container.begin() + branchIndex);
+	this->__SplitBranch(branchIndex, bitPosition);
+	this->__GarbageCollect();
 }
 
 int PseudoTree::CalculateIdentityBitsCount(bool debug)
 {
+	this->__InitColumnTrackers();
+
 	while (!_container.empty())
 	{
 		if (_identityBitCount == _columnTrackers.size())
@@ -95,7 +74,7 @@ int PseudoTree::CalculateIdentityBitsCount(bool debug)
 		// further split branches based on 'most balanced bit'
 		for (int idx = _container.size() - 1; idx >= 0; --idx)
 		{
-			SplitBranch(idx, _columnTrackers[_identityBitCount].column);
+			this->__SplitBranch(idx, _columnTrackers[_identityBitCount].column);
 		}
 		// clear empty or single item branches
 		this->__GarbageCollect();
@@ -124,6 +103,30 @@ void PseudoTree::PrintBalanceRanks()
 		cout << tracker.balanceRank << " ";
 	}
 	cout << endl;
+}
+
+void PseudoTree::__SplitBranch(unsigned int branchIndex, unsigned int bitPosition)
+{
+	// create a new branches first
+	unsigned int zeroBranchIndex = this->AddBranch();
+	unsigned int oneBranchIndex = this->AddBranch();
+
+	// iterate through the selected branch and transfer strings over
+	for (auto str : *_container[branchIndex])
+	{
+		if ((*str)[bitPosition] == '0')
+		{
+			_container[zeroBranchIndex]->push_back(str);
+		}
+		else if ((*str)[bitPosition] == '1')
+		{
+			_container[oneBranchIndex]->push_back(str);
+		}
+	}
+
+	// delete the selected branch
+	delete _container[branchIndex];
+	_container.erase(_container.begin() + branchIndex);
 }
 
 void PseudoTree::__InitColumnTrackers()
