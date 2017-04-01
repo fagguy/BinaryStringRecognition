@@ -78,10 +78,15 @@ void PseudoTree::SplitBranch(unsigned int branchIndex, unsigned int bitPosition)
 	_container.erase(_container.begin() + branchIndex);
 }
 
-unsigned int PseudoTree::CalculateIdentityBitsCount()
+int PseudoTree::CalculateIdentityBitsCount()
 {
 	while (!_container.empty())
 	{
+		if (_identityBitCount == _columnTrackers.size())
+		{
+			return -1; // impossible to find answer... means that there is a duplicate among inputs
+		}
+
 		// calculate the balance ranks
 		this->__CalculateBalanceRanks(_identityBitCount);
 		// then sort according to the ranks
@@ -91,7 +96,7 @@ unsigned int PseudoTree::CalculateIdentityBitsCount()
 		{
 			SplitBranch(idx, _columnTrackers[_identityBitCount].column);
 		}
-		// clear empty branches
+		// clear empty or single item branches
 		this->__GarbageCollect();
 
 		++_identityBitCount;

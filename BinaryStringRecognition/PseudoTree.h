@@ -27,9 +27,9 @@ public:
 	unsigned int AddBranch();
 	unsigned int BranchCount();
 	void AddStringToBranch(string& str, unsigned int branchIndex = 0);
-	void PrintContents();
+	void PrintContents(); // used for debugging
 	void SplitBranch(unsigned int branchIndex, unsigned int bitPosition);
-	unsigned int CalculateIdentityBitsCount();
+	int CalculateIdentityBitsCount();
 
 	void CalculateBalanceRanks(); // test function... to be removed
 	void PrintBalanceRanks(); // used for debugging
