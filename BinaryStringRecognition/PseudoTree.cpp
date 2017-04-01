@@ -168,6 +168,7 @@ unsigned int PseudoTree::__GarbageCollect()
 				delete str;
 			}
 
+			delete _container[index];
 			_container.erase(_container.begin() + index);
 			++garbageCount;
 		}
