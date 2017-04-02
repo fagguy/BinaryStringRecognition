@@ -18,6 +18,7 @@ private:
 
 	vector<vector<string *>> _container;
 	vector<_columnTracker> _columnTrackers;
+	unsigned int _stringCount = 0;
 	unsigned int _identityBitCount = 0;
 
 public:

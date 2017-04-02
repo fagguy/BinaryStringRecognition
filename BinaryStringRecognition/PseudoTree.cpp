@@ -12,6 +12,7 @@ PseudoTree::~PseudoTree()
 		for (auto str : branch)
 		{
 			delete str;
+			--_stringCount;
 		}
 	}
 }
@@ -32,6 +33,7 @@ unsigned int PseudoTree::BranchCount()
 void PseudoTree::AddStringToBranch(string & str, unsigned int branchIndex)
 {
 	_container[branchIndex].push_back(new string(str));
+	++_stringCount;
 }
 
 void PseudoTree::PrintContents()
@@ -190,6 +192,7 @@ unsigned int PseudoTree::__GarbageCollect()
 			for (auto str : _container[index])
 			{
 				delete str;
+				--_stringCount;
 			}
 
 			_container.erase(_container.begin() + index);
