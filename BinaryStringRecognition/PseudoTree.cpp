@@ -142,7 +142,7 @@ void PseudoTree::__InitColumnTrackers()
 
 void PseudoTree::__CalculateBalanceRanks(unsigned int bitsToSkip)
 {
-	for (unsigned int idx = bitsToSkip; idx < _columnTrackers.size(); ++idx)
+	for (int idx = _columnTrackers.size() - 1; idx >= (int)bitsToSkip; --idx)
 	{
 		_columnTrackers[idx].balanceRank = 0; // reset the balance rank
 
@@ -157,6 +157,13 @@ void PseudoTree::__CalculateBalanceRanks(unsigned int bitsToSkip)
 			}
 
 			_columnTrackers[idx].balanceRank += abs(rawSum);
+		}
+
+		// remove the column tracker if the column it's tracking is homogeneous...
+		// it will never be useful and can be skipped in future iterations
+		if (_columnTrackers[idx].balanceRank == _stringCount)
+		{
+			_columnTrackers.erase(_columnTrackers.begin() + idx);
 		}
 	}
 }
