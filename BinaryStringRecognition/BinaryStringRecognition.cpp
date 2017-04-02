@@ -3,10 +3,9 @@
 int main()
 {
 	GetInput();
-	tree.PrintContents();
+	//tree.PrintContents();
 
-	cout << "min no. of identity bits: " << endl
-		<< "> " << tree.CalculateIdentityBitsCount(true) << endl;
+	cout << tree.CalculateIdentityBitsCount() << endl;
 
 	system("Pause");
 	return 0;
@@ -14,14 +13,23 @@ int main()
 
 void GetInput()
 {
-	unsigned int K;
-	string binaryString;
+	unsigned int M, N, K;
+	string binaryString, temp;
 
+	cin >> M;
+	cin >> N;
 	cin >> K;
 
-	for (unsigned int i = 0; i < K; ++i)
+	for (unsigned int blockNum = 0; blockNum < K; ++blockNum)
 	{
-		cin >> binaryString;
+		binaryString = "";
+
+		for (unsigned int inputRow = 0; inputRow < M; ++inputRow)
+		{
+			cin >> temp;
+			binaryString += temp;
+		}
+
 		tree.AddStringToBranch(binaryString);
 	}
 }
