@@ -2,7 +2,7 @@
 
 This is my attempt to solve the following question:
 
->Say that we are given `K` different binary numbers, each with length `N` (`N` can be large). Is there an efficient algorithm to determine the minimal number of bits it needs to distinguish these numbers from each other?
+>Say that we are given `K` different binary numbers, each with length `N` (`N` can be large), such that `a1[0,1,…,N-1], …, aK[0,1,…,N-1]`. Is there an efficient algorithm to determine the minimal number of bits it needs to distinguish these numbers from each other?
 >
 >For example:
 >
@@ -11,8 +11,6 @@ This is my attempt to solve the following question:
 >Given `1000`, `0100`, `0010` and `0001`, we need to check at least three bits to distinguish, so the minimal number is `3`.
 >
 >Given `0000`, `0100`, `1000` and `1100`, we only have to check the first two bits, so the minimal number is `2`.
->
->Assume these binary numbers are the same length, i.e. `a1[0,1,…,N-1], …, aK[0,1,…,N-1]`.
 
 ## Basic Usage
 
